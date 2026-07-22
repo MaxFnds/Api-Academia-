@@ -22,10 +22,6 @@ sessions/
 uploads/*
 !uploads/.gitkeep
 
-# Dados JSON (opcional - remova se quiser versionar)
-dados/*
-!dados/.gitkeep
-
 # Cobertura de testes
 coverage/
 
