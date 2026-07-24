@@ -22,7 +22,15 @@ export class TreinoRepository {
     const dados = this.lerArquivo();
     return dados.map((item) => Treino.fromJSON(item));
   }
-    // Retorna todos os treinos vinculados a um aluno específico
+
+  // Retorna um treino pelo id, ou null se não existir
+  public buscarPorId(id: string): Treino | null {
+    const dados = this.lerArquivo();
+    const item = dados.find((item) => item.id === id);
+    return item ? Treino.fromJSON(item) : null;
+  }
+
+  // Retorna todos os treinos vinculados a um aluno específico
   // (vai ser usado na tela "meus treinos" do aluno logado)
   public buscarPorAlunoId(alunoId: string): Treino[] {
     const treinos = this.listar();
@@ -44,7 +52,7 @@ export class TreinoRepository {
     return treino;
   }
 
-// Substitui os dados de um treino existente. Retorna null se o id não existir.
+  // Substitui os dados de um treino existente. Retorna null se o id não existir.
   public atualizar(id: string, treinoAtualizado: Treino): Treino | null {
     const dados = this.lerArquivo();
     const indice = dados.findIndex((item) => item.id === id);
