@@ -44,3 +44,31 @@ export class TreinoRepository {
     return treino;
   }
 
+// Substitui os dados de um treino existente. Retorna null se o id não existir.
+  public atualizar(id: string, treinoAtualizado: Treino): Treino | null {
+    const dados = this.lerArquivo();
+    const indice = dados.findIndex((item) => item.id === id);
+
+    if (indice === -1) {
+      return null;
+    }
+
+    dados[indice] = treinoAtualizado.toJSON();
+    this.escreverArquivo(dados);
+    return treinoAtualizado;
+  }
+
+  // Remove um treino pelo id. Retorna true se removeu, false se não encontrou.
+  public remover(id: string): boolean {
+    const dados = this.lerArquivo();
+    const tamanhoAntes = dados.length;
+    const dadosFiltrados = dados.filter((item) => item.id !== id);
+
+    if (dadosFiltrados.length === tamanhoAntes) {
+      return false; // nada foi removido, id não existia
+    }
+
+    this.escreverArquivo(dadosFiltrados);
+    return true;
+  }
+}
