@@ -4,7 +4,9 @@
   "description": "FitWeb é um sistema web de gestão de academia/CrossFit, onde instrutores cadastram treinos e exercícios e acompanham a evolução dos alunos. Alunos podem visualizar seus treinos, marcar exercícios como concluídos e acompanhar seu progresso, tudo direto pelo navegador.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
