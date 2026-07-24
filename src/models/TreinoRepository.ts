@@ -22,3 +22,25 @@ export class TreinoRepository {
     const dados = this.lerArquivo();
     return dados.map((item) => Treino.fromJSON(item));
   }
+    // Retorna todos os treinos vinculados a um aluno específico
+  // (vai ser usado na tela "meus treinos" do aluno logado)
+  public buscarPorAlunoId(alunoId: string): Treino[] {
+    const treinos = this.listar();
+    return treinos.filter((treino) => treino.getAlunoId() === alunoId);
+  }
+
+  // Retorna todos os treinos criados por um instrutor específico
+  // (vai ser usado na tela "treinos que eu criei" do instrutor logado)
+  public buscarPorInstrutorId(instrutorId: string): Treino[] {
+    const treinos = this.listar();
+    return treinos.filter((treino) => treino.getInstrutorId() === instrutorId);
+  }
+
+  // Adiciona um novo treino ao arquivo
+  public criar(treino: Treino): Treino {
+    const dados = this.lerArquivo();
+    dados.push(treino.toJSON());
+    this.escreverArquivo(dados);
+    return treino;
+  }
+
