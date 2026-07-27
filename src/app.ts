@@ -4,6 +4,7 @@ import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
 import helmet from "helmet";
+import { sessionConfig } from "./config/session";
 
 const app: Application = express();
 
@@ -14,6 +15,7 @@ app.set("views", path.join(__dirname, "views"));
 // Middlewares globais
 app.use(cors());
 app.use(helmet());
+app.use(sessionConfig);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
