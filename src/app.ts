@@ -7,6 +7,7 @@ import helmet from "helmet";
 import { sessionConfig } from "./config/session";
 import authRoutes from "./routes/authRoutes";
 import alunoRoutes from "./routes/alunoRoutes";
+import instrutorRoutes from "./routes/instrutorRoutes";
 
 
 const app: Application = express();
@@ -33,5 +34,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/api/alunos", alunoRoutes);
+app.use("/api/instrutores", instrutorRoutes);
 
 export default app;
