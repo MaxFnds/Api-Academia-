@@ -6,6 +6,8 @@ import cors from "cors";
 import helmet from "helmet";
 import { sessionConfig } from "./config/session";
 import authRoutes from "./routes/authRoutes";
+import alunoRoutes from "./routes/alunoRoutes";
+
 
 const app: Application = express();
 
@@ -31,10 +33,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-// 🔜 Próximas etapas vão registrar as rotas reais aqui, por exemplo:
-// app.use("/auth", authRoutes);
-// app.use("/api/alunos", alunoRoutes);
-// app.use("/api/instrutores", instrutorRoutes);
-// app.use("/api/treinos", treinoRoutes);
 
 export default app;
