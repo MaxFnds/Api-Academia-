@@ -4,7 +4,6 @@ import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
 import helmet from "helmet";
-app.use("/api/treinos", treinoRoutes);
 
 const app: Application = express();
 
@@ -15,6 +14,7 @@ app.set("views", path.join(__dirname, "views"));
 // Middlewares globais
 app.use(cors());
 app.use(helmet());
+app.use(sessionConfig);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,10 +28,8 @@ app.get("/", (req, res) => {
   res.render("index", { titulo: "FitWeb" });
 });
 
-// 🔜 Próximas etapas vão registrar as rotas reais aqui, por exemplo:
-// app.use("/auth", authRoutes);
-// app.use("/api/alunos", alunoRoutes);
-// app.use("/api/instrutores", instrutorRoutes);
-// app.use("/api/treinos", treinoRoutes);
+app.use("/auth", authRoutes);
+app.use("/api/alunos", alunoRoutes);
+app.use("/api/instrutores", instrutorRoutes);
 
 export default app;
