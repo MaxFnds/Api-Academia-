@@ -5,6 +5,7 @@ import path from "path";
 import cors from "cors";
 import helmet from "helmet";
 import { sessionConfig } from "./config/session";
+import authRoutes from "./routes/authRoutes";
 
 const app: Application = express();
 
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
   res.render("index", { titulo: "FitWeb" });
 });
 
+app.use("/auth", authRoutes);
 // 🔜 Próximas etapas vão registrar as rotas reais aqui, por exemplo:
 // app.use("/auth", authRoutes);
 // app.use("/api/alunos", alunoRoutes);
