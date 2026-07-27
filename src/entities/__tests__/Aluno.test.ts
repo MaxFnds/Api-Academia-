@@ -1,6 +1,6 @@
 import { Aluno } from "../Aluno";
 
-describe("Aluno", () => {
+describe("Aluno", () => { 
 
   // Teste 1: criação válida com todos os campos
   it("deve criar um aluno válido com todos os campos", () => {
