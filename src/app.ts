@@ -4,6 +4,7 @@ import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
 import helmet from "helmet";
+app.use("/api/treinos", treinoRoutes);
 
 const app: Application = express();
 
