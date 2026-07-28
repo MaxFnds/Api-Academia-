@@ -33,6 +33,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
+app.get("/", (req, res) => {
+  if (req.session.usuarioId) {
+    res.redirect("/dashboard");
+    return;
+  }
+
+  res.render("index");
+});
 // Rota raiz temporária, só pra confirmar que o servidor está de pé
 app.get("/", (req, res) => {
   res.render("index");
