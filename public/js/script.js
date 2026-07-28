@@ -289,7 +289,48 @@ if (formTreino) {
         mensagemSemExercicios.hidden = false;
         return;
       }
+formTreino.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
 
+    const botao = formTreino.querySelector("button[type='submit']");
+    esconderErro(mensagemErro);
+    mostrarCarregando(botao);
+
+    // Pega os ids de todos os checkboxes marcados
+    const exerciciosMarcados = Array.from(
+      formTreino.querySelectorAll('input[name="exercicio"]:checked')
+    ).map((checkbox) => checkbox.value);
+
+    const dados = {
+      nome: formTreino.nome.value,
+      alunoId: formTreino.aluno.value,
+      instrutorId: window.usuarioLogadoId, // definido na view, vem da sessão atual
+      exercicios: exerciciosMarcados,
+    };
+
+    try {
+      const resposta = await fetch("/api/treinos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados),
+      });
+
+      const resultado = await resposta.json();
+
+      if (!resposta.ok) {
+        mostrarErro(mensagemErro, resultado.erro || "Não foi possível criar o treino.");
+        esconderCarregando(botao);
+        return;
+      }
+
+      // Treino criado — vai direto pra tela de detalhes dele
+      window.location.href = `/treinos/${resultado.id}`;
+
+    } catch (erro) {
+      mostrarErro(mensagemErro, "Erro de conexão. Tente novamente.");
+      esconderCarregando(botao);
+    }
+  });
       listaCheckboxExercicios.innerHTML = exercicios.map((exercicio) => `
         <label class="opcao-checkbox">
           <input type="checkbox" name="exercicio" value="${exercicio.id}">
