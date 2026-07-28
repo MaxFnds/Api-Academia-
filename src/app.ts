@@ -9,8 +9,14 @@ import authRoutes from "./routes/authRoutes";
 import alunoRoutes from "./routes/alunoRoutes";
 import instrutorRoutes from "./routes/instrutorRoutes";
 import treinoRoutes from "./routes/treinoRoutes";
+import exercicioRoutes from "./routes/exercicioRoutes";
+import { AlunoRepository } from "./models/AlunoRepository";
+import { InstrutorRepository } from "./models/InstrutorRepository";
 
 const app: Application = express();
+
+const alunoRepositoryApp = new AlunoRepository();
+const instrutorRepositoryApp = new InstrutorRepository();
 
 // View engine: EJS, com os templates em src/views
 app.set("view engine", "ejs");
@@ -63,8 +69,6 @@ app.use("/auth", authRoutes);
 app.use("/api/alunos", alunoRoutes);
 app.use("/api/instrutores", instrutorRoutes);
 app.use("/api/treinos", treinoRoutes);
-
-// 🔜 Próxima etapa vai registrar aqui:
 app.use("/api/exercicios", exercicioRoutes);
 
 export default app;
