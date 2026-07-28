@@ -96,3 +96,27 @@ export function remover(req: Request<{ id: string }>, res: Response): void {
 
   res.status(200).json({ mensagem: "Aluno removido com sucesso." });
 }
+
+// PATCH /api/alunos/:id/foto
+// Recebe um arquivo via Multer (campo "foto" no FormData) e salva o caminho no aluno.
+export function atualizarFoto(req: Request, res: Response): void {
+  const { id } = req.params;
+  const aluno = alunoRepository.buscarPorId(id);
+
+  if (!aluno) {
+    res.status(404).json({ erro: "Aluno não encontrado." });
+    return;
+  }
+
+  if (!req.file) {
+    res.status(400).json({ erro: "Nenhuma imagem foi enviada." });
+    return;
+  }
+
+  // Salva o caminho relativo, que depois vira uma URL acessível (/uploads/nome-do-arquivo.jpg)
+  const caminhoRelativo = `uploads/${req.file.filename}`;
+  aluno.setFotoPerfil(caminhoRelativo);
+  alunoRepository.atualizar(id, aluno);
+
+  res.status(200).json({ mensagem: "Foto atualizada com sucesso.", fotoPerfil: caminhoRelativo });
+}
