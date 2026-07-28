@@ -147,15 +147,19 @@ if (listaTreinos) {
   let todosOsTreinos = []; // guarda a lista completa, pra filtrar localmente na busca
 
   // Monta o HTML de um treino na lista
-  function criarItemTreino(treino) {
-    const item = document.createElement("li");
-    item.className = "item-treino";
-    item.innerHTML = `
+function criarItemTreino(treino) {
+  const item = document.createElement("li");
+  item.className = "item-treino";
+
+  item.innerHTML = `
+    <a href="/treinos/${treino.id}" class="link-treino">
       <h3>${treino.nome}</h3>
       <p>${treino.exercicios.length} exercício(s)</p>
-    `;
-    return item;
-  }
+    </a>
+  `;
+
+  return item;
+}
 
   // Renderiza a lista na tela a partir de um array de treinos
   function renderizarTreinos(treinos) {
