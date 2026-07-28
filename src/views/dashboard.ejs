@@ -1,0 +1,35 @@
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topo">
+    <h1 class="logo">FitWeb</h1>
+    <nav class="menu">
+      <span class="saudacao">Olá, <%= nome %> <span class="etiqueta-tipo"><%= tipo %></span></span>
+      <button id="botao-logout" class="botao botao--secundario">Sair</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="cabecalho-secao">
+      <h2>Meus treinos</h2>
+      <input
+        type="search"
+        id="busca-treino"
+        class="campo-busca"
+        placeholder="Buscar treino pelo nome..."
+      >
+    </div>
+
+    <p id="mensagem-carregando" class="mensagem-status">Carregando treinos...</p>
+    <p id="mensagem-vazio" class="mensagem-status" hidden>Nenhum treino encontrado.</p>
+
+    <ul id="lista-treinos" class="lista-treinos"></ul>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>

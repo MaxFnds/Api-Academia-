@@ -9,7 +9,6 @@ import authRoutes from "./routes/authRoutes";
 import alunoRoutes from "./routes/alunoRoutes";
 import instrutorRoutes from "./routes/instrutorRoutes";
 import treinoRoutes from "./routes/treinoRoutes";
-import exercicioRoutes from "./routes/exercicioRoutes";
 
 const app: Application = express();
 
@@ -27,14 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 // Arquivos estáticos: CSS e JS do navegador (public/), fotos enviadas (uploads/)
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
-
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-app.get("/registro", (req, res) => {
-  res.render("registro");
-});
 
 // Rota raiz temporária, só pra confirmar que o servidor está de pé
 app.get("/", (req, res) => {
@@ -54,7 +45,17 @@ app.get("/dashboard", (req, res) => {
     res.redirect("/login");
     return;
   }
-  res.render("dashboard", { tipo: req.session.tipo });
+
+  // Busca o nome do usuário logado, pra exibir "Olá, Fulano" na tela
+  const usuario =
+    req.session.tipo === "aluno"
+      ? alunoRepositoryApp.buscarPorId(req.session.usuarioId)
+      : instrutorRepositoryApp.buscarPorId(req.session.usuarioId);
+
+  res.render("dashboard", {
+    nome: usuario ? usuario.getNome() : "Usuário",
+    tipo: req.session.tipo,
+  });
 });
 
 // Rotas da API
