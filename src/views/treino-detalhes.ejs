@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topo">
+    <h1 class="logo">
+      <a href="/dashboard" class="logo-link">FitWeb</a>
+    </h1>
+
+    <nav class="menu">
+      <button id="botao-logout" class="botao botao--secundario">
+        Sair
+      </button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <a href="/dashboard" class="link-voltar">
+      &larr; Voltar aos treinos
+    </a>
+
+    <p id="mensagem-carregando-treino" class="mensagem-status">
+      Carregando treino...
+    </p>
+
+    <p id="mensagem-erro-treino" class="mensagem-erro" hidden></p>
+
+    <div id="conteudo-treino" hidden>
+      <h2 id="nome-treino"></h2>
+      <p id="contagem-exercicios" class="mensagem-status"></p>
+      <ul id="lista-exercicios" class="lista-exercicios"></ul>
+    </div>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>
