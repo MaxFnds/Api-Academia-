@@ -1,0 +1,52 @@
+html
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitWeb</title>
+<link rel="stylesheet" href="/css/style.css">
+Código para src/views/partials/rodape.ejs:
+html
+<script src="/js/script.js"></script>
+
+📍 Parte 1: login.ejs
+Onde editar: src/views/login.ejs
+Código completo:
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <main class="container container--auth">
+    <div class="card card--auth">
+      <h1 class="logo">FitWeb</h1>
+      <p class="subtitulo">Entre na sua conta para continuar</p>
+
+      <form id="form-login" class="form">
+        <div class="campo">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" required autocomplete="current-password">
+        </div>
+
+        <p class="mensagem-erro" id="mensagem-erro" hidden></p>
+
+        <button type="submit" class="botao botao--primario">
+          <span class="texto-botao">Entrar</span>
+          <span class="spinner" hidden></span>
+        </button>
+      </form>
+
+      <p class="link-secundario">
+        Ainda não tem conta? <a href="/registro">Cadastre-se</a>
+      </p>
+    </div>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>
