@@ -25,3 +25,13 @@
   margin-top: var(--espaco-4);
   flex-wrap: wrap;
 }
+
+@media (max-width: 600px) {
+  .acoes-landing {
+    flex-direction: column;
+  }
+
+  .acoes-landing .botao {
+    width: 100%;
+  }
+}
