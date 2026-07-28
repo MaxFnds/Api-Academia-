@@ -44,19 +44,37 @@ export class Exercicio {
 
   // Setters: permitem alterar os dados, sempre validando antes de aplicar
   public setNome(nome: string): void {
-    this.nome = nome;
+  const nomeAnterior = this.nome;
+  this.nome = nome;
+  try {
     this.validar();
+  } catch (erro) {
+    this.nome = nomeAnterior; // desfaz a mudança se for inválida
+    throw erro;
   }
+}
 
   public setSeries(series: number): void {
-    this.series = series;
+  const anterior = this.series;
+  this.series = series;
+  try {
     this.validar();
+  } catch (erro) {
+    this.series = anterior;
+    throw erro;
   }
+}
 
-  public setRepeticoes(repeticoes: number): void {
-    this.repeticoes = repeticoes;
+public setRepeticoes(repeticoes: number): void {
+  const anterior = this.repeticoes;
+  this.repeticoes = repeticoes;
+  try {
     this.validar();
+  } catch (erro) {
+    this.repeticoes = anterior;
+    throw erro;
   }
+}
 
   public setConcluido(concluido: boolean): void {
     this.concluido = concluido;
