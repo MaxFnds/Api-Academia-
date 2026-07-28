@@ -50,6 +50,19 @@ app.get("/", (req, res) => {
 
   res.render("index");
 });
+
+app.get("/treinos/novo", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+  if (req.session.tipo !== "instrutor") {
+    res.redirect("/dashboard");
+    return;
+  }
+  res.render("treino-novo", { usuarioId: req.session.usuarioId });
+});
+
 // Rota raiz temporária, só pra confirmar que o servidor está de pé
 app.get("/", (req, res) => {
   res.render("index");
