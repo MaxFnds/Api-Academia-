@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topo">
+    <h1 class="logo"><a href="/dashboard" class="logo-link">FitWeb</a></h1>
+    <nav class="menu">
+      <button id="botao-logout" class="botao botao--secundario">Sair</button>
+    </nav>
+  </header>
+
+  <main class="container container--formulario">
+    <a href="/dashboard" class="link-voltar">&larr; Voltar aos treinos</a>
+
+    <h2>Novo treino</h2>
+
+    <form id="form-treino" class="form">
+      <div class="campo">
+        <label for="nome">Nome do treino</label>
+        <input type="text" id="nome" name="nome" required minlength="3" placeholder="Ex: Treino de Pernas - Semana 1">
+      </div>
+
+      <div class="campo">
+        <label for="aluno">Aluno</label>
+        <select id="aluno" name="alunoId" required>
+          <option value="">Carregando alunos...</option>
+        </select>
+      </div>
+
+      <fieldset class="campo campo-fieldset">
+        <legend>Exercícios do treino</legend>
+        <p class="mensagem-status" id="mensagem-sem-exercicios" hidden>
+          Nenhum exercício cadastrado ainda. <a href="/exercicios/novo">Criar um exercício</a>.
+        </p>
+        <div id="lista-checkbox-exercicios" class="lista-checkbox"></div>
+      </fieldset>
+
+      <p class="mensagem-erro" id="mensagem-erro" hidden></p>
+
+      <button type="submit" class="botao botao--primario">
+        <span class="texto-botao">Criar treino</span>
+        <span class="spinner" hidden></span>
+      </button>
+    </form>
+  </main>
+
+  <script>
+    window.usuarioLogadoId = "<%= usuarioId %>";
+  </script>
+  <%- include('partials/rodape') %>
+</body>
+</html>
