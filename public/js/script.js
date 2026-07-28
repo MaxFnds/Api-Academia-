@@ -161,6 +161,27 @@ function criarItemTreino(treino) {
   return item;
 }
 
+async function alternarConcluido(idExercicio, itemHtml) {
+  try {
+    const resposta = await fetch(`/api/exercicios/${idExercicio}/concluir`, {
+      method: "PATCH",
+    });
+
+    if (!resposta.ok) {
+      throw new Error("Não foi possível atualizar o exercício.");
+    }
+
+    const exercicioAtualizado = await resposta.json();
+
+    itemHtml.classList.toggle(
+      "item-exercicio--concluido",
+      exercicioAtualizado.concluido
+    );
+  } catch (erro) {
+    alert("Erro ao atualizar o exercício. Tente novamente.");
+  }
+}
+
   // Renderiza a lista na tela a partir de um array de treinos
   function renderizarTreinos(treinos) {
     listaTreinos.innerHTML = "";
@@ -181,7 +202,14 @@ function criarItemTreino(treino) {
     try {
       const resposta = await fetch("/api/treinos");
       const treinos = await resposta.json();
+listaExercicios.addEventListener("change", (evento) => {
+  if (!evento.target.classList.contains("checkbox-concluido")) return;
 
+  const itemHtml = evento.target.closest(".item-exercicio");
+  const idExercicio = itemHtml.dataset.id;
+
+  alternarConcluido(idExercicio, itemHtml);
+});
       todosOsTreinos = treinos;
       mensagemCarregando.hidden = true;
       renderizarTreinos(treinos);
@@ -223,3 +251,4 @@ if (botaoLogout) {
     }
   });
 }
+
