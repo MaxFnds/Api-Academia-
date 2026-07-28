@@ -4,6 +4,11 @@ import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
 import helmet from "helmet";
+import { sessionConfig } from "./config/session";
+import authRoutes from "./routes/authRoutes";
+import alunoRoutes from "./routes/alunoRoutes";
+import instrutorRoutes from "./routes/instrutorRoutes";
+import treinoRoutes from "./routes/treinoRoutes";
 
 const app: Application = express();
 
@@ -23,13 +28,33 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 // Rota raiz temporária, só pra confirmar que o servidor está de pé
-// (vai virar a tela de login/dashboard de verdade quando as views forem preenchidas)
 app.get("/", (req, res) => {
-  res.render("index", { titulo: "FitWeb" });
+  res.render("index");
 });
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.get("/registro", (req, res) => {
+  res.render("registro");
+});
+
+app.get("/dashboard", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("dashboard", { tipo: req.session.tipo });
+});
+
+// Rotas da API
 app.use("/auth", authRoutes);
 app.use("/api/alunos", alunoRoutes);
 app.use("/api/instrutores", instrutorRoutes);
+app.use("/api/treinos", treinoRoutes);
+
+// 🔜 Próxima etapa vai registrar aqui:
+// app.use("/api/exercicios", exercicioRoutes);
 
 export default app;
