@@ -1,126 +1,88 @@
-export class Treino {
-  private id: string;
-  private nome: string;
-  private alunoId: string;
-  private instrutorId: string;
-  private exercicios: string[];
-  private dataCriacao: string;
+import { Exercicio } from "../Exercicio";
 
-  constructor(
-    id: string,
-    nome: string,
-    alunoId: string,
-    instrutorId: string,
-    exercicios: string[],
-    dataCriacao: string
-  ) {
-    this.id = id;
-    this.nome = nome;
-    this.alunoId = alunoId;
-    this.instrutorId = instrutorId;
-    this.exercicios = exercicios;
-    this.dataCriacao = dataCriacao;
+describe("Exercicio", () => {
 
-    this.validar();
-  }
+  // Teste 1: garante que um exercício válido é criado corretamente
+  it("deve criar um exercício válido", () => {
+    const exercicio = new Exercicio("e1", "Agachamento", 4, 12);
 
-  // Getters
-  public getId(): string {
-    return this.id;
-  }
+    expect(exercicio.getId()).toBe("e1");
+    expect(exercicio.getNome()).toBe("Agachamento");
+    expect(exercicio.getSeries()).toBe(4);
+    expect(exercicio.getRepeticoes()).toBe(12);
+    expect(exercicio.getConcluido()).toBe(false);
+  });
 
-  public getNome(): string {
-    return this.nome;
-  }
+  // Teste 2: nome vazio deve lançar erro
+  it("não deve permitir nome vazio", () => {
+    expect(() => {
+      new Exercicio("e2", "", 4, 12);
+    }).toThrow("O nome do exercício é obrigatório.");
+  });
 
-  public getAlunoId(): string {
-    return this.alunoId;
-  }
+  // Teste 3: séries menor ou igual a zero deve lançar erro
+  it("não deve permitir séries menor ou igual a zero", () => {
+    expect(() => {
+      new Exercicio("e3", "Supino", 0, 10);
+    }).toThrow("O número de séries deve ser maior que zero.");
+  });
 
-  public getInstrutorId(): string {
-    return this.instrutorId;
-  }
+  // Teste 4: repetições menor ou igual a zero deve lançar erro
+  it("não deve permitir repetições menor ou igual a zero", () => {
+    expect(() => {
+      new Exercicio("e4", "Supino", 3, 0);
+    }).toThrow("O número de repetições deve ser maior que zero.");
+  });
 
-  public getExercicios(): string[] {
-    return [...this.exercicios];
-  }
+  // Teste 5: setConcluido deve alterar o estado corretamente
+  it("deve marcar o exercício como concluído", () => {
+    const exercicio = new Exercicio("e5", "Remada", 3, 10);
+    exercicio.setConcluido(true);
 
-  public getDataCriacao(): string {
-    return this.dataCriacao;
-  }
+    expect(exercicio.getConcluido()).toBe(true);
+  });
 
-  // Setters
-  public setNome(nome: string): void {
-    this.nome = nome;
-    this.validar();
-  }
+  // Teste 6: setNome com valor inválido deve lançar erro e não alterar o estado
+  it("não deve alterar o nome para um valor vazio", () => {
+    const exercicio = new Exercicio("e6", "Rosca direta", 3, 10);
 
-  public setAlunoId(alunoId: string): void {
-    this.alunoId = alunoId;
-    this.validar();
-  }
+    expect(() => {
+      exercicio.setNome("");
+    }).toThrow("O nome do exercício é obrigatório.");
 
-  public setInstrutorId(instrutorId: string): void {
-    this.instrutorId = instrutorId;
-    this.validar();
-  }
+    expect(exercicio.getNome()).toBe("Rosca direta");
+  });
 
-  // Adiciona exercício
-  public adicionarExercicio(exercicioId: string): void {
-    if (this.exercicios.includes(exercicioId)) {
-      throw new Error("Este exercício já está no treino.");
-    }
+  // Teste 7: toJSON deve gerar o objeto correto
+  it("deve converter para JSON corretamente", () => {
+    const exercicio = new Exercicio("e7", "Leg press", 4, 15, true);
 
-    this.exercicios.push(exercicioId);
-  }
+    expect(exercicio.toJSON()).toEqual({
+      id: "e7",
+      nome: "Leg press",
+      series: 4,
+      repeticoes: 15,
+      concluido: true,
+    });
+  });
 
-  // Remove exercício
-  public removerExercicio(exercicioId: string): void {
-    this.exercicios = this.exercicios.filter(
-      (id) => id !== exercicioId
-    );
-  }
-
-  // Validação
-  private validar(): void {
-    if (!this.nome || this.nome.trim().length === 0) {
-      throw new Error("O nome do treino é obrigatório.");
-    }
-
-    if (!this.alunoId) {
-      throw new Error(
-        "O treino precisa estar vinculado a um aluno."
-      );
-    }
-
-    if (!this.instrutorId) {
-      throw new Error(
-        "O treino precisa estar vinculado a um instrutor."
-      );
-    }
-  }
-
-  // Converter para JSON
-  public toJSON(): object {
-    return {
-      id: this.id,
-      nome: this.nome,
-      alunoId: this.alunoId,
-      instrutorId: this.instrutorId,
-      exercicios: this.exercicios,
-      dataCriacao: this.dataCriacao,
+  // Teste 8: fromJSON deve reconstruir a instância corretamente
+  it("deve criar uma instância a partir de um objeto JSON", () => {
+    const dados = {
+      id: "e8",
+      nome: "Puxada frontal",
+      series: 3,
+      repeticoes: 12,
+      concluido: false,
     };
-  }
 
-  // Converter de JSON para objeto
-  public static fromJSON(data: any): Treino {
-    return new Treino(
-      data.id,
-      data.nome,
-      data.alunoId,
-      data.instrutorId,
-      data.exercicios || [],
-      data.dataCriacao
-    );
-  }
-}
+    const exercicio = Exercicio.fromJSON(dados);
+
+    expect(exercicio.getId()).toBe("e8");
+    expect(exercicio.getNome()).toBe("Puxada frontal");
+    expect(exercicio.getSeries()).toBe(3);
+    expect(exercicio.getRepeticoes()).toBe(12);
+    expect(exercicio.getConcluido()).toBe(false);
+  });
+
+});
