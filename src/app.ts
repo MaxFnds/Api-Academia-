@@ -18,6 +18,15 @@ const app: Application = express();
 const alunoRepositoryApp = new AlunoRepository();
 const instrutorRepositoryApp = new InstrutorRepository();
 
+app.get("/treinos/:id", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+
+  res.render("treino-detalhes");
+});
+
 // View engine: EJS, com os templates em src/views
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
