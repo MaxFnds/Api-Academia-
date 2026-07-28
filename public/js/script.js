@@ -137,3 +137,85 @@ if (formRegistro) {
     }
   });
 }
+const listaTreinos = document.getElementById("lista-treinos");
+
+if (listaTreinos) {
+  const mensagemCarregando = document.getElementById("mensagem-carregando");
+  const mensagemVazio = document.getElementById("mensagem-vazio");
+  const campoBusca = document.getElementById("busca-treino");
+
+  let todosOsTreinos = []; // guarda a lista completa, pra filtrar localmente na busca
+
+  // Monta o HTML de um treino na lista
+  function criarItemTreino(treino) {
+    const item = document.createElement("li");
+    item.className = "item-treino";
+    item.innerHTML = `
+      <h3>${treino.nome}</h3>
+      <p>${treino.exercicios.length} exercício(s)</p>
+    `;
+    return item;
+  }
+
+  // Renderiza a lista na tela a partir de um array de treinos
+  function renderizarTreinos(treinos) {
+    listaTreinos.innerHTML = "";
+
+    if (treinos.length === 0) {
+      mensagemVazio.hidden = false;
+      return;
+    }
+
+    mensagemVazio.hidden = true;
+    treinos.forEach((treino) => {
+      listaTreinos.appendChild(criarItemTreino(treino));
+    });
+  }
+
+  // Busca os treinos na API
+  async function carregarTreinos() {
+    try {
+      const resposta = await fetch("/api/treinos");
+      const treinos = await resposta.json();
+
+      todosOsTreinos = treinos;
+      mensagemCarregando.hidden = true;
+      renderizarTreinos(treinos);
+
+    } catch (erro) {
+      mensagemCarregando.textContent = "Erro ao carregar treinos.";
+    }
+  }
+
+  carregarTreinos();
+
+  // Busca com debounce: espera 400ms depois que a pessoa parou de digitar,
+  // pra não filtrar a cada tecla (evita processamento desnecessário)
+  let temporizadorBusca;
+  campoBusca.addEventListener("input", () => {
+    clearTimeout(temporizadorBusca);
+
+    temporizadorBusca = setTimeout(() => {
+      const termo = campoBusca.value.trim().toLowerCase();
+      const filtrados = todosOsTreinos.filter((treino) =>
+        treino.nome.toLowerCase().includes(termo)
+      );
+      renderizarTreinos(filtrados);
+    }, 400);
+  });
+}
+
+// ===== Logout (funciona em qualquer página que tenha o botão) =====
+
+const botaoLogout = document.getElementById("botao-logout");
+
+if (botaoLogout) {
+  botaoLogout.addEventListener("click", async () => {
+    try {
+      await fetch("/auth/logout", { method: "POST" });
+      window.location.href = "/login";
+    } catch (erro) {
+      alert("Não foi possível sair. Tente novamente.");
+    }
+  });
+}
