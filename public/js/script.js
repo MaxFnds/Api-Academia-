@@ -250,5 +250,62 @@ if (botaoLogout) {
       alert("Não foi possível sair. Tente novamente.");
     }
   });
+  // ===== Formulário de novo treino =====
+
+const formTreino = document.getElementById("form-treino");
+
+if (formTreino) {
+  const selectAluno = document.getElementById("aluno");
+  const listaCheckboxExercicios = document.getElementById("lista-checkbox-exercicios");
+  const mensagemSemExercicios = document.getElementById("mensagem-sem-exercicios");
+  const mensagemErro = document.getElementById("mensagem-erro");
+
+  // Preenche o <select> de alunos a partir da API
+  async function carregarAlunos() {
+    try {
+      const resposta = await fetch("/api/alunos");
+      const alunos = await resposta.json();
+
+      selectAluno.innerHTML = '<option value="">Selecione um aluno...</option>';
+      alunos.forEach((aluno) => {
+        const opcao = document.createElement("option");
+        opcao.value = aluno.id;
+        opcao.textContent = aluno.nome;
+        selectAluno.appendChild(opcao);
+      });
+
+    } catch (erro) {
+      selectAluno.innerHTML = '<option value="">Erro ao carregar alunos</option>';
+    }
+  }
+
+  // Preenche a lista de checkboxes de exercícios a partir da API
+  async function carregarExercicios() {
+    try {
+      const resposta = await fetch("/api/exercicios");
+      const exercicios = await resposta.json();
+
+      if (exercicios.length === 0) {
+        mensagemSemExercicios.hidden = false;
+        return;
+      }
+
+      listaCheckboxExercicios.innerHTML = exercicios.map((exercicio) => `
+        <label class="opcao-checkbox">
+          <input type="checkbox" name="exercicio" value="${exercicio.id}">
+          ${exercicio.nome} <span class="detalhe-checkbox">(${exercicio.series}×${exercicio.repeticoes})</span>
+        </label>
+      `).join("");
+
+    } catch (erro) {
+      listaCheckboxExercicios.innerHTML = "";
+      mensagemSemExercicios.hidden = false;
+      mensagemSemExercicios.textContent = "Erro ao carregar exercícios.";
+    }
+  }
+
+  carregarAlunos();
+  carregarExercicios();
+}
 }
 
