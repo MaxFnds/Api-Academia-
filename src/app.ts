@@ -27,6 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.get("/registro", (req, res) => {
+  res.render("registro");
+});
+
 // Rota raiz temporária, só pra confirmar que o servidor está de pé
 app.get("/", (req, res) => {
   res.render("index");
