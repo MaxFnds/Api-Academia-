@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes";
 import alunoRoutes from "./routes/alunoRoutes";
 import instrutorRoutes from "./routes/instrutorRoutes";
 import treinoRoutes from "./routes/treinoRoutes";
+import exercicioRoutes from "./routes/exercicioRoutes";
 
 const app: Application = express();
 
@@ -63,6 +64,6 @@ app.use("/api/instrutores", instrutorRoutes);
 app.use("/api/treinos", treinoRoutes);
 
 // 🔜 Próxima etapa vai registrar aqui:
-// app.use("/api/exercicios", exercicioRoutes);
+app.use("/api/exercicios", exercicioRoutes);
 
 export default app;
