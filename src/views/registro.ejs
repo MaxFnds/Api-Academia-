@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <main class="container container--auth">
+    <div class="card card--auth">
+      <h1 class="logo">FitWeb</h1>
+      <p class="subtitulo">Crie sua conta gratuitamente</p>
+
+      <form id="form-registro" class="form">
+        <div class="campo">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" required minlength="3">
+        </div>
+
+        <div class="campo">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" required minlength="6" autocomplete="new-password">
+          <small class="dica-campo">Mínimo de 6 caracteres</small>
+        </div>
+
+        <div class="campo">
+          <label for="tipo">Eu sou</label>
+          <select id="tipo" name="tipo" required>
+            <option value="">Selecione...</option>
+            <option value="aluno">Aluno</option>
+            <option value="instrutor">Instrutor</option>
+          </select>
+        </div>
+
+        <div class="campo campo--condicional" id="campo-idade" hidden>
+          <label for="idade">Idade</label>
+          <input type="number" id="idade" name="idade" min="10" max="120">
+        </div>
+
+        <div class="campo campo--condicional" id="campo-especialidade" hidden>
+          <label for="especialidade">Especialidade</label>
+          <input type="text" id="especialidade" name="especialidade" placeholder="Ex: CrossFit, Musculação...">
+        </div>
+
+        <p class="mensagem-erro" id="mensagem-erro" hidden></p>
+
+        <button type="submit" class="botao botao--primario">
+          <span class="texto-botao">Criar conta</span>
+          <span class="spinner" hidden></span>
+        </button>
+      </form>
+
+      <p class="link-secundario">
+        Já tem conta? <a href="/login">Entrar</a>
+      </p>
+    </div>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>
