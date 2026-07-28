@@ -1,0 +1,27 @@
+/* ===== Landing page ===== */
+
+.card--landing {
+  max-width: 480px;
+  text-align: center;
+}
+
+.logo--grande {
+  font-size: 2.5rem;
+}
+
+.frase-impacto {
+  font-family: var(--fonte-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.1rem;
+  color: var(--cor-secundaria);
+  margin: var(--espaco-2) 0 var(--espaco-1);
+}
+
+.acoes-landing {
+  display: flex;
+  gap: var(--espaco-2);
+  justify-content: center;
+  margin-top: var(--espaco-4);
+  flex-wrap: wrap;
+}
