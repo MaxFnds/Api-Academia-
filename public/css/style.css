@@ -109,3 +109,55 @@
   accent-color: var(--cor-secundaria);
   cursor: pointer;
 }
+/* ===== Formulário de novo treino ===== */
+
+.container--formulario {
+  max-width: 640px;
+}
+
+.acoes-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
+}
+
+.campo-fieldset {
+  border: 2px solid var(--cor-borda);
+  padding: var(--espaco-3);
+}
+
+.campo-fieldset legend {
+  font-family: var(--fonte-display);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  padding: 0 0.4rem;
+}
+
+.lista-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: var(--espaco-1);
+}
+
+.opcao-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.opcao-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cor-primaria);
+  cursor: pointer;
+}
+
+.detalhe-checkbox {
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+}
