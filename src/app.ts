@@ -1,5 +1,6 @@
 // Configuração central do Express: view engine, middlewares e arquivos estáticos.
 // Não sobe servidor aqui — isso é feito em server.ts, que importa este app.
+
 import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
@@ -18,16 +19,7 @@ const app: Application = express();
 const alunoRepositoryApp = new AlunoRepository();
 const instrutorRepositoryApp = new InstrutorRepository();
 
-app.get("/treinos/:id", (req, res) => {
-  if (!req.session.usuarioId) {
-    res.redirect("/login");
-    return;
-  }
-
-  res.render("treino-detalhes");
-});
-
-// View engine: EJS, com os templates em src/views
+// View engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -38,10 +30,11 @@ app.use(sessionConfig);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Arquivos estáticos: CSS e JS do navegador (public/), fotos enviadas (uploads/)
+// Arquivos estáticos
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
+// Página inicial
 app.get("/", (req, res) => {
   if (req.session.usuarioId) {
     res.redirect("/dashboard");
@@ -51,38 +44,23 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/treinos/novo", (req, res) => {
-  if (!req.session.usuarioId) {
-    res.redirect("/login");
-    return;
-  }
-  if (req.session.tipo !== "instrutor") {
-    res.redirect("/dashboard");
-    return;
-  }
-  res.render("treino-novo", { usuarioId: req.session.usuarioId });
-});
-
-// Rota raiz temporária, só pra confirmar que o servidor está de pé
-app.get("/", (req, res) => {
-  res.render("index");
-});
-
+// Página de login
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
+// Página de registro
 app.get("/registro", (req, res) => {
   res.render("registro");
 });
 
+// Dashboard
 app.get("/dashboard", (req, res) => {
   if (!req.session.usuarioId) {
     res.redirect("/login");
     return;
   }
 
-  // Busca o nome do usuário logado, pra exibir "Olá, Fulano" na tela
   const usuario =
     req.session.tipo === "aluno"
       ? alunoRepositoryApp.buscarPorId(req.session.usuarioId)
@@ -91,6 +69,33 @@ app.get("/dashboard", (req, res) => {
   res.render("dashboard", {
     nome: usuario ? usuario.getNome() : "Usuário",
     tipo: req.session.tipo,
+  });
+});
+
+// Tela de detalhes do treino
+app.get("/treinos/:id", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+
+  res.render("treino-detalhes");
+});
+
+// Tela de criação de treino (somente instrutores)
+app.get("/treinos/novo", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+
+  if (req.session.tipo !== "instrutor") {
+    res.redirect("/dashboard");
+    return;
+  }
+
+  res.render("treino-novo", {
+    usuarioId: req.session.usuarioId,
   });
 });
 
