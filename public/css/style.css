@@ -34,6 +34,15 @@
   .acoes-landing .botao {
     width: 100%;
   }
+
+  .linha-campos {
+    flex-direction: column;
+
+  }
+
+  .acoes-landing .botao {
+    width: 100%;
+  }
 }
 /* ===== Detalhes do treino ===== */
 
