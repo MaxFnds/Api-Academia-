@@ -8,9 +8,25 @@ const CAMINHO_ARQUIVO = path.join(__dirname, "..", "..", "dados", "exercicios.js
 export class ExercicioRepository {
 
   private lerArquivo(): any[] {
-    const conteudo = fs.readFileSync(CAMINHO_ARQUIVO, "utf-8");
-    return JSON.parse(conteudo);
+  const buffer = fs.readFileSync(CAMINHO_ARQUIVO);
+
+  // Detecta BOM de UTF-16 (LE ou BE) e converte corretamente.
+  // Isso evita o erro "Unexpected token" caso o arquivo tenha sido
+  // salvo por algum editor (ex: Bloco de Notas do Windows) em UTF-16.
+  let conteudo: string;
+
+  if (buffer[0] === 0xff && buffer[1] === 0xfe) {
+    conteudo = buffer.toString("utf16le");
+  } else if (buffer[0] === 0xfe && buffer[1] === 0xff) {
+    conteudo = buffer.swap16().toString("utf16le");
+  } else {
+    conteudo = buffer.toString("utf-8");
   }
+
+  conteudo = conteudo.replace(/^\uFEFF/, "");
+
+  return JSON.parse(conteudo);
+}
 
   private escreverArquivo(dados: any[]): void {
     fs.writeFileSync(CAMINHO_ARQUIVO, JSON.stringify(dados, null, 2), "utf-8");

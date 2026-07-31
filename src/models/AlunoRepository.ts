@@ -14,13 +14,25 @@ export class AlunoRepository {
 
   // Lê os dados do arquivo JSON
   private lerArquivo(): any[] {
-    const conteudo = fs.readFileSync(
-      CAMINHO_ARQUIVO,
-      "utf-8"
-    );
+  const buffer = fs.readFileSync(CAMINHO_ARQUIVO);
 
-    return JSON.parse(conteudo);
+  // Detecta BOM de UTF-16 (LE ou BE) e converte corretamente.
+  // Isso evita o erro "Unexpected token" caso o arquivo tenha sido
+  // salvo por algum editor (ex: Bloco de Notas do Windows) em UTF-16.
+  let conteudo: string;
+
+  if (buffer[0] === 0xff && buffer[1] === 0xfe) {
+    conteudo = buffer.toString("utf16le");
+  } else if (buffer[0] === 0xfe && buffer[1] === 0xff) {
+    conteudo = buffer.swap16().toString("utf16le");
+  } else {
+    conteudo = buffer.toString("utf-8");
   }
+
+  conteudo = conteudo.replace(/^\uFEFF/, "");
+
+  return JSON.parse(conteudo);
+}
 
 
   // Salva os dados no arquivo JSON
