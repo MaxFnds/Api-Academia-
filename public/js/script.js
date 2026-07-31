@@ -822,3 +822,70 @@ if (formTreino) {
 
 
 }
+// ===== Formulário de novo exercício =====
+
+const formExercicio = document.getElementById("form-exercicio");
+
+if (formExercicio) {
+  const mensagemErro = document.getElementById("mensagem-erro");
+  const mensagemSucesso = document.getElementById("mensagem-sucesso");
+
+  formExercicio.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const botao = formExercicio.querySelector("button[type='submit']");
+
+    esconderErro(mensagemErro);
+    mensagemSucesso.hidden = true;
+    mostrarCarregando(botao);
+
+    const dados = {
+      nome: formExercicio.nome.value,
+      series: Number(formExercicio.series.value),
+      repeticoes: Number(formExercicio.repeticoes.value),
+    };
+
+    try {
+      const resposta = await fetch("/api/exercicios", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dados),
+      });
+
+      const resultado = await resposta.json();
+
+      if (!resposta.ok) {
+        mostrarErro(
+          mensagemErro,
+          resultado.erro || "Não foi possível criar o exercício."
+        );
+
+        esconderCarregando(botao);
+        return;
+      }
+
+      mensagemSucesso.textContent =
+        `Exercício "${resultado.nome}" criado com sucesso.`;
+
+      mensagemSucesso.hidden = false;
+
+      formExercicio.reset();
+      formExercicio.series.value = 3;
+      formExercicio.repeticoes.value = 12;
+
+      esconderCarregando(botao);
+
+      formExercicio.nome.focus();
+
+    } catch (erro) {
+      mostrarErro(
+        mensagemErro,
+        "Erro de conexão. Tente novamente."
+      );
+
+      esconderCarregando(botao);
+    }
+  });
+}
