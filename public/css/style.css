@@ -34,6 +34,15 @@
   .acoes-landing .botao {
     width: 100%;
   }
+
+  .linha-campos {
+    flex-direction: column;
+
+  }
+
+  .acoes-landing .botao {
+    width: 100%;
+  }
 }
 /* ===== Detalhes do treino ===== */
 
@@ -160,4 +169,29 @@
 .detalhe-checkbox {
   color: var(--cor-texto-suave);
   font-size: 0.8rem;
+}
+/* ===== Formulário de exercício ===== */
+
+.linha-campos {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.linha-campos .campo {
+  flex: 1;
+}
+
+.mensagem-sucesso {
+  background-color: #F0F7F5;
+  color: var(--cor-secundaria);
+  border-left: 3px solid var(--cor-secundaria);
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.acoes-formulario {
+  display: flex;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
 }
