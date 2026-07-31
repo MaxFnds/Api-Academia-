@@ -4,24 +4,105 @@
   <%- include('partials/head') %>
 </head>
 <body>
-  <main class="container container--auth">
-    <div class="card card--landing">
-      <h1 class="logo logo--grande">FitWeb</h1>
-
-      <p class="frase-impacto">
-        Treino organizado. Progresso visível.
-      </p>
-
-      <p class="subtitulo">
-        Uma plataforma simples para instrutores montarem treinos
-        e alunos acompanharem cada série, repetição e evolução.
-      </p>
-
-      <div class="acoes-landing">
-        <a href="/login" class="botao botao--primario">Entrar</a>
-        <a href="/registro" class="botao botao--secundario">Criar conta</a>
+  <header>
+    <nav class="nav-principal">
+      <span class="logo">FitWeb</span>
+      <div class="menu">
+        <a href="#recursos">Recursos</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="/login">Entrar</a>
       </div>
-    </div>
+      <a href="/registro" class="botao botao--primario">Criar conta</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="selo">Protocolo de alta performance</span>
+      <h1 class="hero-titulo">
+        Treinos organizados.<br>
+        <span class="destaque">Progresso visível.</span>
+      </h1>
+      <p class="hero-subtitulo">
+        A plataforma definitiva para instrutores criarem planos técnicos de
+        alta precisão e alunos superarem limites físicos com dados em tempo real.
+      </p>
+      <div class="hero-acoes">
+        <a href="/registro" class="botao botao--primario">Criar conta</a>
+        <a href="/login" class="botao botao--secundario">Entrar</a>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="secao">
+      <div class="secao-conteudo">
+        <div class="secao-cabecalho">
+          <h2 class="secao-titulo">Como funciona</h2>
+          <span class="secao-legenda">Metodologia FitWeb / 01-03</span>
+        </div>
+
+        <div class="passos">
+          <div class="passo">
+            <div class="passo-numero">01.</div>
+            <h3 class="passo-titulo">Montagem técnica</h3>
+            <p class="passo-texto">
+              Instrutores montam o treino personalizado utilizando nossa base de dados biomecânicos.
+            </p>
+          </div>
+
+          <div class="passo">
+            <div class="passo-numero">02.</div>
+            <h3 class="passo-titulo">Execução assistida</h3>
+            <p class="passo-texto">
+              Alunos acessam o portal e executam as séries com cronometragem e intervalos automatizados.
+            </p>
+          </div>
+
+          <div class="passo">
+            <div class="passo-numero">03.</div>
+            <h3 class="passo-titulo">Análise de dados</h3>
+            <p class="passo-texto">
+              O progresso é registrado em tempo real, gerando insights imediatos sobre carga e volume.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recursos" class="secao secao--clara">
+      <div class="secao-conteudo">
+        <div class="grade-recursos">
+          <div class="card-recurso">
+            <div class="icone-recurso">🏋️</div>
+            <h3>Montagem de treinos</h3>
+            <p>Interface intuitiva para instrutores. Construa planilhas complexas em segundos.</p>
+          </div>
+
+          <div class="card-recurso">
+            <div class="icone-recurso">📈</div>
+            <h3>Acompanhamento</h3>
+            <p>Gráficos de evolução para alunos monitorarem volume semanal e recordes pessoais.</p>
+          </div>
+
+          <div class="card-recurso">
+            <div class="icone-recurso">👤</div>
+            <h3>Perfil customizado</h3>
+            <p>Upload de fotos, bio profissional e histórico de certificações integradas.</p>
+          </div>
+
+          <div class="card-recurso">
+            <div class="icone-recurso">🔒</div>
+            <h3>Segurança de dados</h3>
+            <p>Autenticação robusta e criptografia de ponta a ponta para todos os registros.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-final">
+      <h2>Pronto para o próximo nível?</h2>
+      <p>Junte-se a milhares de profissionais que já digitalizaram seus resultados.</p>
+      <a href="/registro" class="botao botao--primario">Começar agora gratuitamente</a>
+    </section>
   </main>
 
   <%- include('partials/rodape') %>
