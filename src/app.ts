@@ -99,6 +99,21 @@ app.get("/treinos/novo", (req, res) => {
   });
 });
 
+// Tela de criação de exercício (somente instrutores)
+app.get("/exercicios/novo", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+
+  if (req.session.tipo !== "instrutor") {
+    res.redirect("/dashboard");
+    return;
+  }
+
+  res.render("exercicio-novo");
+});
+
 // Rotas da API
 app.use("/auth", authRoutes);
 app.use("/api/alunos", alunoRoutes);
