@@ -16,5 +16,13 @@
     "idade": 25,
     "fotoPerfil": "uploads/maria.jpg",
     "dataCadastro": "2026-07-24T10:30:00.000Z"
+  },
+  {
+    "id": "8380802e-76cd-496a-9bb3-0daed5813b96",
+    "nome": "heytor andrade",
+    "email": "heytorandrademedeiros2009@gmail.com",
+    "senha": "$2b$10$udReJ5heqJL7gEzYEtB7e.QtDGzatOA6t4tj/NryOASOgjfa.d3si",
+    "idade": 17,
+    "dataCadastro": "2026-08-03T19:57:10.545Z"
   }
 ]
