@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header>
+    <nav class="nav-principal">
+      <a href="/" class="logo logo-link">FitWeb</a>
+    </nav>
+  </header>
+
+  <main class="container container--auth">
+    <div class="card card--erro">
+      <span class="codigo-erro">Erro <%= status %></span>
+      <h1 class="titulo-erro"><%= titulo %></h1>
+      <p class="subtitulo"><%= mensagem %></p>
+
+        <div class="acoes-landing">
+        <a href="<%= typeof destino !== 'undefined' ? destino : '/' %>" class="botao botao--primario">
+          Voltar
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>

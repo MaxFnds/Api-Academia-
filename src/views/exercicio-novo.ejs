@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topo">
+    <h1 class="logo">
+      <a href="/dashboard" class="logo-link">FitWeb</a>
+    </h1>
+
+    <nav class="menu">
+      <button id="botao-logout" class="botao botao--secundario">
+        Sair
+      </button>
+    </nav>
+  </header>
+
+  <main class="container container--formulario">
+    <a href="/dashboard" class="link-voltar">
+      &larr; Voltar aos treinos
+    </a>
+
+    <h2>Novo exercício</h2>
+
+    <p class="subtitulo">
+      Cadastre um exercício para usar na montagem de treinos.
+    </p>
+
+    <form id="form-exercicio" class="form">
+
+      <div class="campo">
+        <label for="nome">Nome do exercício</label>
+
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          required
+          minlength="2"
+          placeholder="Ex: Agachamento livre"
+        >
+      </div>
+
+      <div class="linha-campos">
+
+        <div class="campo">
+          <label for="series">Séries</label>
+
+          <input
+            type="number"
+            id="series"
+            name="series"
+            required
+            min="1"
+            value="3"
+          >
+        </div>
+
+        <div class="campo">
+          <label for="repeticoes">Repetições</label>
+
+          <input
+            type="number"
+            id="repeticoes"
+            name="repeticoes"
+            required
+            min="1"
+            value="12"
+          >
+        </div>
+
+      </div>
+
+      <p
+        class="mensagem-erro"
+        id="mensagem-erro"
+        hidden
+      ></p>
+
+      <p
+        class="mensagem-sucesso"
+        id="mensagem-sucesso"
+        hidden
+      ></p>
+
+      <div class="acoes-formulario">
+
+        <button
+          type="submit"
+          class="botao botao--primario"
+        >
+          <span class="texto-botao">
+            Salvar exercício
+          </span>
+
+          <span
+            class="spinner"
+            hidden
+          ></span>
+        </button>
+
+        <a
+          href="/treinos/novo"
+          class="botao botao--secundario"
+        >
+          Ir para novo treino
+        </a>
+
+      </div>
+
+    </form>
+
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>
