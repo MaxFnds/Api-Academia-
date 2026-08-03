@@ -16,9 +16,12 @@
       <h1 class="titulo-erro"><%= titulo %></h1>
       <p class="subtitulo"><%= mensagem %></p>
 
-      <div class="acoes-landing">
-        <a href="/" class="botao botao--primario">Voltar ao início</a>
+        <div class="acoes-landing">
+        <a href="<%= typeof destino !== 'undefined' ? destino : '/' %>" class="botao botao--primario">
+          Voltar
+        </a>
       </div>
+
     </div>
   </main>
 
