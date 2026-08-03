@@ -91,7 +91,11 @@ app.get("/treinos/novo", (req, res) => {
   }
 
   if (req.session.tipo !== "instrutor") {
-    res.redirect("/dashboard");
+    res.status(403).render("erro", {
+      status: 403,
+      titulo: "Acesso restrito",
+      mensagem: "Apenas instrutores podem criar treinos.",
+    });
     return;
   }
 
@@ -108,12 +112,17 @@ app.get("/exercicios/novo", (req, res) => {
   }
 
   if (req.session.tipo !== "instrutor") {
-    res.redirect("/dashboard");
+    res.status(403).render("erro", {
+      status: 403,
+      titulo: "Acesso restrito",
+      mensagem: "Apenas instrutores podem cadastrar exercícios.",
+    });
     return;
   }
 
   res.render("exercicio-novo");
 });
+
 
 // Rotas da API
 app.use("/auth", authRoutes);
