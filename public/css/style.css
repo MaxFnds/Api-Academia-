@@ -780,6 +780,31 @@ img {
   font-size: 0.8rem;
   color: var(--cor-texto-suave);
 }
+/* ===== Página de erro (400 / 404 / 500) ===== */
+
+.card--erro {
+  max-width: 480px;
+  text-align: center;
+}
+
+.codigo-erro {
+  display: inline-block;
+  background-color: #FBEAE8;
+  color: var(--cor-primaria);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--raio);
+  margin-bottom: var(--espaco-2);
+}
+
+.titulo-erro {
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  color: var(--cor-texto);
+}
 
 /* ===== Responsivo ===== */
 
