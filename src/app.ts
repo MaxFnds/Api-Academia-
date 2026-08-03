@@ -95,6 +95,7 @@ app.get("/treinos/novo", (req, res) => {
       status: 403,
       titulo: "Acesso restrito",
       mensagem: "Apenas instrutores podem criar treinos.",
+      destino: "/dashboard",
     });
     return;
   }
@@ -104,6 +105,7 @@ app.get("/treinos/novo", (req, res) => {
   });
 });
 
+// Tela de criação de exercício (somente instrutores)
 // Tela de criação de exercício (somente instrutores)
 app.get("/exercicios/novo", (req, res) => {
   if (!req.session.usuarioId) {
@@ -116,6 +118,7 @@ app.get("/exercicios/novo", (req, res) => {
       status: 403,
       titulo: "Acesso restrito",
       mensagem: "Apenas instrutores podem cadastrar exercícios.",
+      destino: "/dashboard",
     });
     return;
   }
