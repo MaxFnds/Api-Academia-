@@ -10,7 +10,7 @@
     "id": "i2",
     "nome": "Ana Pereira",
     "email": "ana@email.com",
-    "senha": "$2b$10$hashDaSenhaTeste",
+    "senha": "12345678",
     "especialidade": "Treinamento funcional"
   }
 ]
