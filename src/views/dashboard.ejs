@@ -22,9 +22,12 @@
           class="campo-busca"
           placeholder="Buscar treino pelo nome..."
         >
-        <% if (tipo === "instrutor") { %>
+          <% if (tipo === "instrutor") { %>
+          <a href="/exercicios" class="botao botao--secundario">Exercícios</a>
+          <a href="/exercicios/novo" class="botao botao--secundario">+ Novo exercício</a>
           <a href="/treinos/novo" class="botao botao--primario">+ Novo treino</a>
         <% } %>
+
       </div>
     </div>
 
