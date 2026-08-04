@@ -242,8 +242,13 @@ if (listaTreinos) {
 
 
   const ehInstrutor =
-    listaTreinos.dataset.tipo === "instrutor";
+  listaTreinos.dataset.tipo === "instrutor";
 
+const linhaAluno = ehInstrutor
+  ? `<p class="aluno-item-treino">Aluno: ${treino.alunoNome || "não identificado"}</p>`
+  : "";
+
+const botaoExcluir = ehInstrutor
 
   const botaoExcluir = ehInstrutor
     ? `
@@ -265,9 +270,11 @@ if (listaTreinos) {
 
       <h3>${treino.nome}</h3>
 
-      <p>
-        ${treino.exercicios.length} exercício(s)
-      </p>
+${linhaAluno}
+
+<p>
+  ${treino.exercicios.length} exercício(s)
+</p>
 
     </a>
 
