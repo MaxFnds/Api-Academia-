@@ -806,6 +806,54 @@ img {
   color: var(--cor-texto);
 }
 
+/* ===== Catálogo de exercícios ===== */
+
+.lista-exercicios-catalogo {
+  list-style: none;
+  margin: var(--espaco-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.item-exercicio-catalogo {
+  background-color: var(--cor-superficie);
+  border: 2px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco-2) var(--espaco-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+}
+
+.item-exercicio-catalogo h3 {
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.15rem;
+}
+
+.item-exercicio-catalogo p {
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+}
+
+.botao--perigo {
+  background-color: transparent;
+  color: var(--cor-primaria);
+  border-color: var(--cor-borda);
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+}
+
+.botao--perigo:hover {
+  background-color: #FBEAE8;
+  border-color: var(--cor-primaria);
+}
+
+
 /* ===== Responsivo ===== */
 
 @media (max-width: 700px) {

@@ -569,6 +569,86 @@ if (conteudoTreino) {
 
 }
 
+// ===== Catálogo de exercícios (listar + excluir) =====
+
+const listaExerciciosCatalogo = document.getElementById("lista-exercicios-catalogo");
+
+if (listaExerciciosCatalogo) {
+
+  const mensagemCarregandoExercicios = document.getElementById("mensagem-carregando-exercicios");
+  const mensagemVazioExercicios = document.getElementById("mensagem-vazio-exercicios");
+
+  function criarItemExercicioCatalogo(exercicio) {
+    const item = document.createElement("li");
+    item.className = "item-exercicio-catalogo";
+    item.dataset.id = exercicio.id;
+
+    item.innerHTML = `
+      <div>
+        <h3>${exercicio.nome}</h3>
+        <p>${exercicio.series}x${exercicio.repeticoes}</p>
+      </div>
+      <button type="button" class="botao botao--perigo botao-excluir-exercicio">
+        Excluir
+      </button>
+    `;
+
+    return item;
+  }
+
+  async function carregarExerciciosCatalogo() {
+    try {
+      const resposta = await fetch("/api/exercicios");
+      const exercicios = await resposta.json();
+
+      mensagemCarregandoExercicios.hidden = true;
+
+      if (exercicios.length === 0) {
+        mensagemVazioExercicios.hidden = false;
+        return;
+      }
+
+      listaExerciciosCatalogo.innerHTML = "";
+      exercicios.forEach((exercicio) => {
+        listaExerciciosCatalogo.appendChild(criarItemExercicioCatalogo(exercicio));
+      });
+
+    } catch (erro) {
+      mensagemCarregandoExercicios.textContent = "Erro ao carregar exercícios.";
+    }
+  }
+
+  listaExerciciosCatalogo.addEventListener("click", async (evento) => {
+    if (!evento.target.classList.contains("botao-excluir-exercicio")) return;
+
+    const item = evento.target.closest(".item-exercicio-catalogo");
+    const id = item.dataset.id;
+
+    const confirmar = confirm("Tem certeza que deseja excluir este exercício?");
+    if (!confirmar) return;
+
+    try {
+      const resposta = await fetch(`/api/exercicios/${id}`, { method: "DELETE" });
+
+      if (!resposta.ok) {
+        throw new Error();
+      }
+
+      item.remove();
+
+      if (!listaExerciciosCatalogo.children.length) {
+        mensagemVazioExercicios.hidden = false;
+      }
+
+    } catch (erro) {
+      alert("Não foi possível excluir o exercício.");
+    }
+  });
+
+  carregarExerciciosCatalogo();
+}
+
+
 // ===== Formulário de novo treino =====
 
 const formTreino =
