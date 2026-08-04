@@ -350,6 +350,58 @@ if (listaTreinos) {
 
   carregarTreinos();
 
+ listaTreinos.addEventListener("click", async (evento) => {
+
+    if (!evento.target.classList.contains("botao-excluir-treino")) {
+      return;
+    }
+
+    const item = evento.target.closest(".item-treino");
+    const id = item.dataset.id;
+
+    const confirmar = confirm(
+      "Tem certeza que deseja excluir este treino?"
+    );
+
+    if (!confirmar) return;
+
+
+    try {
+
+      const resposta = await fetch(`/api/treinos/${id}`, {
+        method: "DELETE",
+      });
+
+
+      if (!resposta.ok) {
+        throw new Error();
+      }
+
+
+      item.remove();
+
+
+      todosOsTreinos =
+        todosOsTreinos.filter(
+          (treino) => treino.id !== id
+        );
+
+
+      if (listaTreinos.children.length === 0) {
+        mensagemVazio.hidden = false;
+      }
+
+
+    } catch (erro) {
+
+      alert(
+        "Não foi possível excluir o treino."
+      );
+
+    }
+
+  });
+
 
 
   if (campoBusca) {
