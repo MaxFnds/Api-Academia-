@@ -791,7 +791,7 @@ if (formTreino) {
 
 
         instrutorId:
-          window.usuarioLogadoId,
+          formTreino.dataset.usuarioId,
 
 
         exercicios
