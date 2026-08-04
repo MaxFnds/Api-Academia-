@@ -896,3 +896,10 @@ img {
     text-align: center;
   }
 }
+
+css
+.aluno-item-treino {
+  color: var(--cor-secundaria);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
