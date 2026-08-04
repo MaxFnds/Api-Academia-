@@ -13,16 +13,24 @@ const exercicioRepository = new ExercicioRepository();
 
 // GET /api/treinos
 // Se logado como aluno, mostra só os treinos dele. Se instrutor, mostra todos.
+// Em ambos os casos, já inclui o nome do aluno de cada treino — evita o
+// front-end ter que fazer uma chamada extra pra cada treino só pra mostrar isso.
 export function listar(req: Request, res: Response): void {
+  function comNomeDoAluno(treino: Treino) {
+    const aluno = alunoRepository.buscarPorId(treino.getAlunoId());
+    return { ...treino.toJSON(), alunoNome: aluno ? aluno.getNome() : null };
+  }
+
   if (req.session.tipo === "aluno") {
     const treinos = treinoRepository.buscarPorAlunoId(req.session.usuarioId!);
-    res.status(200).json(treinos.map((t) => t.toJSON()));
+    res.status(200).json(treinos.map(comNomeDoAluno));
     return;
   }
 
   const treinos = treinoRepository.listar();
-  res.status(200).json(treinos.map((t) => t.toJSON()));
+  res.status(200).json(treinos.map(comNomeDoAluno));
 }
+
 
 // GET /api/treinos/:id
 export function buscarPorId(req: Request, res: Response): void {
