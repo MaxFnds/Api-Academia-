@@ -854,6 +854,24 @@ img {
 }
 
 
+/* ===== Ações dentro do card de treino (dashboard) ===== */
+
+.item-treino {
+  display: flex;
+  flex-direction: column;
+}
+
+.acoes-item-treino {
+  padding: 0 var(--espaco-3) var(--espaco-2);
+}
+
+.acoes-item-treino .botao {
+  width: 100%;
+}
+
+
+/* ===== Responsivo ===== */
+
 /* ===== Responsivo ===== */
 
 @media (max-width: 700px) {
