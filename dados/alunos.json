@@ -24,5 +24,13 @@
     "senha": "$2b$10$udReJ5heqJL7gEzYEtB7e.QtDGzatOA6t4tj/NryOASOgjfa.d3si",
     "idade": 17,
     "dataCadastro": "2026-08-03T19:57:10.545Z"
+  },
+  {
+    "id": "4fff2833-de0c-4ca4-beb2-92b9dbf894b5",
+    "nome": "Lucas",
+    "email": "lucasaraujomorais7@gmail.com",
+    "senha": "$2b$10$I0KMl3J3kO32m3R1Kst/gOjiCUuaR7KUkpx1i2IKL9abLatntE1Bq",
+    "idade": 90,
+    "dataCadastro": "2026-08-04T19:16:06.415Z"
   }
 ]

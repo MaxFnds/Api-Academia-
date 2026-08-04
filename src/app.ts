@@ -73,17 +73,9 @@ app.get("/dashboard", (req, res) => {
   });
 });
 
-// Tela de detalhes do treino
-app.get("/treinos/:id", (req, res) => {
-  if (!req.session.usuarioId) {
-    res.redirect("/login");
-    return;
-  }
-
-  res.render("treino-detalhes");
-});
-
 // Tela de criação de treino (somente instrutores)
+// IMPORTANTE: essa rota precisa vir ANTES de "/treinos/:id" — senão o Express
+// entende "novo" como se fosse o :id de um treino, e nunca chega aqui.
 app.get("/treinos/novo", (req, res) => {
   if (!req.session.usuarioId) {
     res.redirect("/login");
@@ -105,7 +97,16 @@ app.get("/treinos/novo", (req, res) => {
   });
 });
 
-// Tela de criação de exercício (somente instrutores)
+// Tela de detalhes do treino
+app.get("/treinos/:id", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+
+  res.render("treino-detalhes");
+});
+
 // Tela de criação de exercício (somente instrutores)
 app.get("/exercicios/novo", (req, res) => {
   if (!req.session.usuarioId) {
@@ -125,7 +126,6 @@ app.get("/exercicios/novo", (req, res) => {
 
   res.render("exercicio-novo");
 });
-
 
 // Rotas da API
 app.use("/auth", authRoutes);
