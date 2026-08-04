@@ -107,6 +107,16 @@ app.get("/treinos/:id", (req, res) => {
   res.render("treino-detalhes");
 });
 
+// Tela com a lista de exercícios cadastrados
+app.get("/exercicios", (req, res) => {
+  if (!req.session.usuarioId) {
+    res.redirect("/login");
+    return;
+  }
+
+  res.render("exercicios");
+});
+
 // Tela de criação de exercício (somente instrutores)
 app.get("/exercicios/novo", (req, res) => {
   if (!req.session.usuarioId) {
