@@ -16,7 +16,12 @@ const SALT_ROUNDS = 10; // custo do hash do bcrypt — 10 é o padrão recomenda
 // POST /auth/registro
 export async function registrar(req: Request, res: Response): Promise<void> {
   try {
-    const { nome, email, senha, tipo, idade, especialidade } = req.body;
+    const { nome, senha, tipo, idade, especialidade } = req.body;
+
+    // Normaliza o email (tira espaços nas pontas e deixa tudo minúsculo) — evita que
+    // "Joao@Email.com" e "joao@email.com" sejam tratados como contas diferentes,
+    // e evita falha de login por causa de maiúscula/minúscula ou espaço a mais.
+    const email = (req.body.email || "").trim().toLowerCase();
 
     if (!tipo || (tipo !== "aluno" && tipo !== "instrutor")) {
       res.status(400).json({ erro: "O campo 'tipo' deve ser 'aluno' ou 'instrutor'." });
@@ -57,7 +62,8 @@ export async function registrar(req: Request, res: Response): Promise<void> {
 // POST /auth/login
 export async function login(req: Request, res: Response): Promise<void> {
   try {
-    const { email, senha } = req.body;
+    const { senha } = req.body;
+    const email = (req.body.email || "").trim().toLowerCase();
 
     if (!email || !senha) {
       res.status(400).json({ erro: "Email e senha são obrigatórios." });
