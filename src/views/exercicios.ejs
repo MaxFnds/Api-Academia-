@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topo">
+    <h1 class="logo">
+      <a href="/dashboard" class="logo-link">FitWeb</a>
+    </h1>
+    <nav class="menu">
+      <button id="botao-logout" class="botao botao--secundario">Sair</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <a href="/dashboard" class="link-voltar">&larr; Voltar aos treinos</a>
+
+    <div class="cabecalho-secao">
+      <h2>Exercícios cadastrados</h2>
+      <a href="/exercicios/novo" class="botao botao--primario">+ Novo exercício</a>
+    </div>
+
+    <p id="mensagem-carregando-exercicios" class="mensagem-status">Carregando exercícios...</p>
+    <p id="mensagem-vazio-exercicios" class="mensagem-status" hidden>Nenhum exercício cadastrado ainda.</p>
+
+    <ul id="lista-exercicios-catalogo" class="lista-exercicios-catalogo"></ul>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>
