@@ -12,5 +12,12 @@
     "email": "ana@email.com",
     "senha": "12345678",
     "especialidade": "Treinamento funcional"
+  },
+  {
+    "id": "3c208df8-62a2-4d24-b235-d496f60e630e",
+    "nome": "Lucas",
+    "email": "lokessshan@gmail.com",
+    "senha": "$2b$10$1ZAEar9m8g6klx/NikevEuOJN6OzsfwlpeA96/lkoxnzs5HiKTTsa",
+    "especialidade": "Musculação"
   }
 ]

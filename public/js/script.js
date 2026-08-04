@@ -491,7 +491,85 @@ if (listaExercicios) {
     }
   );
 
-}// ===== Formulário de novo treino =====
+}
+
+// ===== Detalhes do treino (carrega o treino e os exercícios dele) =====
+
+const conteudoTreino = document.getElementById("conteudo-treino");
+
+if (conteudoTreino) {
+
+  const mensagemCarregandoTreino = document.getElementById("mensagem-carregando-treino");
+  const mensagemErroTreino = document.getElementById("mensagem-erro-treino");
+  const nomeTreinoEl = document.getElementById("nome-treino");
+  const contagemExerciciosEl = document.getElementById("contagem-exercicios");
+  const listaExerciciosTreino = document.getElementById("lista-exercicios");
+
+  // Pega o id do treino direto da URL, ex: /treinos/abc-123 -> "abc-123"
+  const idTreino = window.location.pathname.split("/").pop();
+
+  function criarItemExercicio(exercicio) {
+    const item = document.createElement("li");
+    item.className = "item-exercicio";
+    if (exercicio.concluido) {
+      item.classList.add("item-exercicio--concluido");
+    }
+    item.dataset.id = exercicio.id;
+
+    item.innerHTML = `
+      <span class="anilha">${exercicio.series}x${exercicio.repeticoes}</span>
+      <div class="info-exercicio">
+        <h3>${exercicio.nome}</h3>
+      </div>
+      <label class="opcao-concluido">
+        <input type="checkbox" class="checkbox-concluido" ${exercicio.concluido ? "checked" : ""}>
+        Concluído
+      </label>
+    `;
+
+    return item;
+  }
+
+  async function carregarTreino() {
+    try {
+      const respostaTreino = await fetch(`/api/treinos/${idTreino}`);
+
+      if (!respostaTreino.ok) {
+        throw new Error("Treino não encontrado.");
+      }
+
+      const treino = await respostaTreino.json();
+
+      // Busca os dados completos (nome, séries, repetições) de cada exercício do treino
+      const exercicios = await Promise.all(
+        treino.exercicios.map((exercicioId) =>
+          fetch(`/api/exercicios/${exercicioId}`).then((resposta) => resposta.json())
+        )
+      );
+
+      nomeTreinoEl.textContent = treino.nome;
+      contagemExerciciosEl.textContent =
+        exercicios.length === 1 ? "1 exercício" : `${exercicios.length} exercícios`;
+
+      listaExerciciosTreino.innerHTML = "";
+      exercicios.forEach((exercicio) => {
+        listaExerciciosTreino.appendChild(criarItemExercicio(exercicio));
+      });
+
+      mensagemCarregandoTreino.hidden = true;
+      conteudoTreino.hidden = false;
+
+    } catch (erro) {
+      mensagemCarregandoTreino.hidden = true;
+      mostrarErro(mensagemErroTreino, "Não foi possível carregar este treino.");
+    }
+  }
+
+  carregarTreino();
+
+}
+
+// ===== Formulário de novo treino =====
 
 const formTreino =
   document.getElementById("form-treino");
