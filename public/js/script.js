@@ -235,29 +235,50 @@ if (listaTreinos) {
 
   function criarItemTreino(treino) {
 
-    const item = document.createElement("li");
+  const item = document.createElement("li");
 
-    item.className = "item-treino";
-
-
-    item.innerHTML = `
-
-      <a href="/treinos/${treino.id}" class="link-treino">
-
-        <h3>${treino.nome}</h3>
-
-        <p>
-          ${treino.exercicios.length} exercício(s)
-        </p>
-
-      </a>
-
-    `;
+  item.className = "item-treino";
+  item.dataset.id = treino.id;
 
 
-    return item;
+  const ehInstrutor =
+    listaTreinos.dataset.tipo === "instrutor";
 
-  }
+
+  const botaoExcluir = ehInstrutor
+    ? `
+      <div class="acoes-item-treino">
+        <button
+          type="button"
+          class="botao botao--perigo botao-excluir-treino"
+        >
+          Excluir treino
+        </button>
+      </div>
+    `
+    : "";
+
+
+  item.innerHTML = `
+
+    <a href="/treinos/${treino.id}" class="link-treino">
+
+      <h3>${treino.nome}</h3>
+
+      <p>
+        ${treino.exercicios.length} exercício(s)
+      </p>
+
+    </a>
+
+    ${botaoExcluir}
+
+  `;
+
+
+  return item;
+
+}
 
 
 
