@@ -1,12 +1,5 @@
 [
   {
-    "id": "e1",
-    "nome": "Supino reto",
-    "series": 4,
-    "repeticoes": 12,
-    "concluido": false
-  },
-  {
     "id": "e2",
     "nome": "Agachamento livre",
     "series": 3,
@@ -25,6 +18,20 @@
     "nome": "Puxada frontal",
     "series": 4,
     "repeticoes": 10,
+    "concluido": false
+  },
+  {
+    "id": "488944fd-5d00-43df-8382-e0e9e48f43de",
+    "nome": "barra fixa",
+    "series": 3,
+    "repeticoes": 8,
+    "concluido": false
+  },
+  {
+    "id": "73afd07e-0b2a-4990-88ab-d92ce8abd0d9",
+    "nome": "flexão ",
+    "series": 3,
+    "repeticoes": 12,
     "concluido": false
   }
 ]

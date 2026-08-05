@@ -1,17 +1,5 @@
 [
   {
-    "id": "t1",
-    "nome": "Treino Superior",
-    "alunoId": "a1",
-    "instrutorId": "i1",
-    "exercicios": [
-      "e1",
-      "e3",
-      "e4"
-    ],
-    "dataCriacao": "2026-07-24T11:00:00.000Z"
-  },
-  {
     "id": "t2",
     "nome": "Treino de Pernas",
     "alunoId": "a2",
@@ -20,5 +8,30 @@
       "e2"
     ],
     "dataCriacao": "2026-07-24T11:30:00.000Z"
+  },
+  {
+    "id": "d55adaa2-82d6-4982-94a1-1cdafa58a329",
+    "nome": "treino 3x1",
+    "alunoId": "4fff2833-de0c-4ca4-beb2-92b9dbf894b5",
+    "instrutorId": "59b414bd-17fe-4e7d-a39e-555dabafe7ba",
+    "exercicios": [
+      "e2",
+      "e3",
+      "e4",
+      "488944fd-5d00-43df-8382-e0e9e48f43de"
+    ],
+    "dataCriacao": "2026-08-05T14:03:44.049Z"
+  },
+  {
+    "id": "cc74c328-99c7-4d30-ac1f-b68933afcecd",
+    "nome": "treino 2x1",
+    "alunoId": "a1",
+    "instrutorId": "59b414bd-17fe-4e7d-a39e-555dabafe7ba",
+    "exercicios": [
+      "e2",
+      "e4",
+      "488944fd-5d00-43df-8382-e0e9e48f43de"
+    ],
+    "dataCriacao": "2026-08-05T14:04:45.826Z"
   }
 ]
