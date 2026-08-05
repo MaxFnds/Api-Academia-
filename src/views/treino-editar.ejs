@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topo">
+    <h1 class="logo">
+      <a href="/dashboard" class="logo-link">FitWeb</a>
+    </h1>
+    <nav class="menu">
+      <button id="botao-logout" class="botao botao--secundario">Sair</button>
+    </nav>
+  </header>
+
+  <main class="container container--formulario">
+    <a href="/dashboard" class="link-voltar">&larr; Voltar aos treinos</a>
+
+    <h2>Editar treino</h2>
+    <p class="subtitulo">Altere o nome ou os exercícios do treino.</p>
+
+    <form id="form-editar-treino" class="form" data-usuario-id="<%= usuarioId %>" data-treino-id="<%= treinoId %>">
+      <div class="campo">
+        <label for="nome">Nome do treino</label>
+        <input type="text" id="nome" name="nome" required minlength="2" placeholder="Ex: Treino A - Superiores">
+      </div>
+
+      <fieldset class="campo-fieldset">
+        <legend>Exercícios</legend>
+        <p id="mensagem-sem-exercicios" class="mensagem-status" hidden>
+          Nenhum exercício cadastrado ainda.
+          <a href="/exercicios/novo">Cadastre um exercício</a> antes de editar o treino.
+        </p>
+        <div id="lista-checkbox-exercicios" class="lista-checkbox"></div>
+      </fieldset>
+
+      <p class="mensagem-erro" id="mensagem-erro" hidden></p>
+      <p class="mensagem-sucesso" id="mensagem-sucesso" hidden></p>
+
+      <div class="acoes-formulario">
+        <button type="submit" class="botao botao--primario">
+          <span class="texto-botao">Salvar alterações</span>
+          <span class="spinner" hidden></span>
+        </button>
+        <a href="/dashboard" class="botao botao--secundario">Cancelar</a>
+      </div>
+    </form>
+  </main>
+
+  <%- include('partials/rodape') %>
+</body>
+</html>
+
+
