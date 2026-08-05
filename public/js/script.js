@@ -1119,4 +1119,285 @@ if (formExercicio) {
       esconderCarregando(botao);
     }
   });
+  // ===== Perfil do usuário (upload de foto + edição de dados) =====
+
+const formPerfil = document.getElementById("form-perfil");
+
+if (formPerfil) {
+  const mensagemErro = document.getElementById("mensagem-erro");
+  const mensagemSucesso = document.getElementById("mensagem-sucesso");
+  const usuarioId = formPerfil.dataset.usuarioId;
+
+  // Carrega dados do perfil ao entrar na página
+  async function carregarPerfil() {
+    try {
+      const resposta = await fetch(`/api/alunos/${usuarioId}`);
+      if (resposta.ok) {
+        const aluno = await resposta.json();
+        if (aluno.nome) document.getElementById("nome").value = aluno.nome;
+        if (aluno.email) document.getElementById("email").value = aluno.email;
+        if (aluno.idade) document.getElementById("idade").value = aluno.idade;
+      }
+    } catch (erro) {
+      // Silencioso — pode ser instrutor (rota diferente)
+    }
+  }
+
+  carregarPerfil();
+
+  formPerfil.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const botao = formPerfil.querySelector("button[type='submit']");
+    esconderErro(mensagemErro);
+    mensagemSucesso.hidden = true;
+    mostrarCarregando(botao);
+
+    const inputFile = document.getElementById("foto");
+    const arquivo = inputFile.files[0];
+
+    try {
+      // Se houver foto selecionada, envia primeiro via FormData
+      if (arquivo) {
+        const formData = new FormData();
+        formData.append("foto", arquivo);
+
+        const respostaFoto = await fetch(`/api/alunos/${usuarioId}/foto`, {
+          method: "PATCH",
+          body: formData,
+        });
+
+        if (!respostaFoto.ok) {
+          const resultado = await respostaFoto.json();
+          mostrarErro(mensagemErro, resultado.erro || "Não foi possível enviar a foto.");
+          esconderCarregando(botao);
+          return;
+        }
+
+        mensagemSucesso.textContent = "Foto atualizada com sucesso.";
+        mensagemSucesso.hidden = false;
+      }
+
+      // Depois envia os dados de texto via JSON (PUT)
+      const dados = {};
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const idade = document.getElementById("idade");
+      const especialidade = document.getElementById("especialidade");
+
+      if (nome) dados.nome = nome;
+      if (email) dados.email = email;
+      if (idade && idade.value) dados.idade = Number(idade.value);
+      if (especialidade && especialidade.value) dados.especialidade = especialidade.value;
+
+      if (Object.keys(dados).length > 0) {
+        const respostaDados = await fetch(`/api/alunos/${usuarioId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados),
+        });
+
+        if (!respostaDados.ok) {
+          const resultado = await respostaDados.json();
+          mostrarErro(mensagemErro, resultado.erro || "Não foi possível atualizar os dados.");
+          esconderCarregando(botao);
+          return;
+        }
+      }
+
+      if (!arquivo) {
+        mensagemSucesso.textContent = "Dados atualizados com sucesso.";
+        mensagemSucesso.hidden = false;
+      }
+
+      esconderCarregando(botao);
+
+    } catch (erro) {
+      mostrarErro(mensagemErro, "Erro de conexão. Tente novamente.");
+      esconderCarregando(botao);
+    }
+  });
+}
+
+
+// ===== Edição de Treino =====
+
+const formEditarTreino = document.getElementById("form-editar-treino");
+
+if (formEditarTreino) {
+  const mensagemErro = document.getElementById("mensagem-erro");
+  const mensagemSucesso = document.getElementById("mensagem-sucesso");
+  const listaCheckboxExercicios = document.getElementById("lista-checkbox-exercicios");
+  const mensagemSemExercicios = document.getElementById("mensagem-sem-exercicios");
+  const treinoId = formEditarTreino.dataset.treinoId;
+
+  async function carregarTreinoExistente() {
+    try {
+      const resposta = await fetch(`/api/treinos/${treinoId}`);
+      if (!resposta.ok) throw new Error();
+      const treino = await resposta.json();
+      document.getElementById("nome").value = treino.nome;
+      return treino.exercicios || [];
+    } catch {
+      mostrarErro(mensagemErro, "Treino não encontrado.");
+      return [];
+    }
+  }
+
+  async function carregarExerciciosDisponiveis(exerciciosAtuais) {
+    try {
+      const resposta = await fetch("/api/exercicios");
+      const exercicios = await resposta.json();
+
+      if (exercicios.length === 0) {
+        mensagemSemExercicios.hidden = false;
+        return;
+      }
+
+      listaCheckboxExercicios.innerHTML = exercicios.map((ex) => `
+        <label class="opcao-checkbox">
+          <input type="checkbox" name="exercicio" value="${ex.id}" ${exerciciosAtuais.includes(ex.id) ? "checked" : ""}>
+          ${ex.nome}
+          <span class="detalhe-checkbox">(${ex.series}x${ex.repeticoes})</span>
+        </label>
+      `).join("");
+    } catch {
+      mensagemSemExercicios.hidden = false;
+      mensagemSemExercicios.textContent = "Erro ao carregar exercícios.";
+    }
+  }
+
+  async function init() {
+    const exerciciosAtuais = await carregarTreinoExistente();
+    await carregarExerciciosDisponiveis(exerciciosAtuais);
+  }
+
+  init();
+
+  formEditarTreino.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const botao = formEditarTreino.querySelector("button[type='submit']");
+    esconderErro(mensagemErro);
+    mensagemSucesso.hidden = true;
+    mostrarCarregando(botao);
+
+    try {
+      // 1. Atualiza o nome do treino (PUT)
+      const nome = document.getElementById("nome").value.trim();
+      const respostaNome = await fetch(`/api/treinos/${treinoId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome }),
+      });
+
+      if (!respostaNome.ok) {
+        const resultado = await respostaNome.json();
+        mostrarErro(mensagemErro, resultado.erro || "Não foi possível atualizar o treino.");
+        esconderCarregando(botao);
+        return;
+      }
+
+      // 2. Atualiza os exercícios do treino (PATCH por exercício)
+      const exerciciosSelecionados = Array.from(
+        formEditarTreino.querySelectorAll('input[name="exercicio"]:checked')
+      ).map((cb) => cb.value);
+
+      // Remove exercícios que não estão mais selecionados
+      const exerciciosRemovidos = Array.from(
+        formEditarTreino.querySelectorAll('input[name="exercicio"]:not(:checked)')
+      ).map((cb) => cb.value);
+
+      for (const exercicioId of exerciciosRemovidos) {
+        await fetch(`/api/treinos/${treinoId}/exercicios`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ exercicioId, acao: "remover" }),
+        });
+      }
+
+      for (const exercicioId of exerciciosSelecionados) {
+        await fetch(`/api/treinos/${treinoId}/exercicios`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ exercicioId, acao: "adicionar" }),
+        });
+      }
+
+      mensagemSucesso.textContent = "Treino atualizado com sucesso.";
+      mensagemSucesso.hidden = false;
+      esconderCarregando(botao);
+
+    } catch (erro) {
+      mostrarErro(mensagemErro, "Erro de conexão. Tente novamente.");
+      esconderCarregando(botao);
+    }
+  });
+}
+
+
+// ===== Edição de Aluno =====
+
+const formEditarAluno = document.getElementById("form-editar-aluno");
+
+if (formEditarAluno) {
+  const mensagemErro = document.getElementById("mensagem-erro");
+  const mensagemSucesso = document.getElementById("mensagem-sucesso");
+  const alunoId = formEditarAluno.dataset.alunoId;
+
+  async function carregarAluno() {
+    try {
+      const resposta = await fetch(`/api/alunos/${alunoId}`);
+      if (!resposta.ok) throw new Error();
+      const aluno = await resposta.json();
+      document.getElementById("nome").value = aluno.nome || "";
+      document.getElementById("email").value = aluno.email || "";
+      document.getElementById("idade").value = aluno.idade || "";
+    } catch {
+      mostrarErro(mensagemErro, "Aluno não encontrado.");
+    }
+  }
+
+  carregarAluno();
+
+  formEditarAluno.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const botao = formEditarAluno.querySelector("button[type='submit']");
+    esconderErro(mensagemErro);
+    mensagemSucesso.hidden = true;
+    mostrarCarregando(botao);
+
+    const dados = {
+      nome: document.getElementById("nome").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      idade: Number(document.getElementById("idade").value),
+    };
+
+    try {
+      const resposta = await fetch(`/api/alunos/${alunoId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados),
+      });
+
+      if (!resposta.ok) {
+        const resultado = await resposta.json();
+        mostrarErro(mensagemErro, resultado.erro || "Não foi possível atualizar o aluno.");
+        esconderCarregando(botao);
+        return;
+      }
+
+      mensagemSucesso.textContent = "Aluno atualizado com sucesso.";
+      mensagemSucesso.hidden = false;
+      esconderCarregando(botao);
+
+    } catch (erro) {
+      mostrarErro(mensagemErro, "Erro de conexão. Tente novamente.");
+      esconderCarregando(botao);
+    }
+  });
+}
+
+
 }
