@@ -4,8 +4,6 @@
 FitWeb é um sistema web de gestão de academia/CrossFit, onde instrutores cadastram treinos e exercícios e acompanham a evolução dos alunos. Alunos podem visualizar seus treinos, marcar exercícios como concluídos e acompanhar seu progresso, tudo direto pelo navegador.
 
 
-> ⚠️ Ajuste esta descrição se o tema do projeto for diferente de Academia/CrossFit.
-
 
 ---
 
@@ -63,7 +61,7 @@ FitWeb é um sistema web de gestão de academia/CrossFit, onde instrutores cadas
 
 ```bash
 # Clonar o repositório
-git clone <URL_DO_REPOSITORIO>
+git clone <https://github.com/MaxFnds/Api-Academia-.git>
 cd fitweb
 
 
@@ -93,7 +91,7 @@ npm test
 ## 📸 Screenshots
 
 
-> Adicionar no mínimo 3 imagens: tela de login, tela de listagem e tela de formulário.
+
 
 
 | Tela | Imagem |
@@ -185,7 +183,3 @@ projeto/
 | PUT | `/api/exercicios/:id` | Atualizar exercício | Instrutor | 200/404 |
 | DELETE | `/api/exercicios/:id` | Remover exercício | Instrutor | 200/404 |
 | PATCH | `/api/exercicios/:id/concluir` | Marcar exercício como concluído (fetch, sem reload) | Sim | 200/404 |
-
-
-> ⚠️ Esta tabela é um rascunho baseado nas entidades sugeridas para o tema Academia/CrossFit. Substituam pelas rotas reais conforme forem implementando (Aula 50 em diante).
-
